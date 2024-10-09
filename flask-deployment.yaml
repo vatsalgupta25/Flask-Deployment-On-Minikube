@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-app
+  template:
+    metadata:
+      labels:
+        app: flask-app  # This label is correct
+    spec:
+      containers:
+      - name: flask-app
+        image: pow3
+        imagePullPolicy: Never 
+        envFrom:
+        - configMapRef:
+            name: flask-app-config
+        ports:
+        - containerPort: 8000
